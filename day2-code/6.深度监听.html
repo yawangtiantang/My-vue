@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="user.name">
+</div>
+<script>
+var vm = new Vue({
+el: '#app',
+data: {
+    user:{
+        name:'jack'
+    }
+},
+watch:{
+    //当监听的data是复杂数据，是一个对象的时候，要用深度监听
+    user:{
+        handler(newVal){//handler函数名固定
+            console.log(newVal.name)
+        },
+        deep:true//表示深度监听
+    }
+    
+},
+methods: {}
+})
+</script>
+</body>
+</html>
