@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="./vue2.js"></script>
+</head>
+<body>
+<div id="app">
+    
+    <input type="text" v-model='firstname'>
+    <input type="text" v-model='lastname'>
+    <div> 全名:{{firstname+lastname}}</div>
+    <h1>computed</h1>
+    <div>全名:{{fullName}}</div>
+    
+    <h1>watch</h1>
+    <div>全名:{{fullname}}</div>
+   
+</div>
+<script>
+var vm = new Vue({
+el: '#app',
+data: {
+    firstname:'',
+    lastname:'',
+    fullname:''
+},
+computed:{//通过computed关键字来创建计算属性关键字，它是一个对象
+    fullName(){//这里fullname就是一个计算属性，它是一个函数但是可以当做一个属性来用
+        return this.firstname+this.lastname
+    }
+},
+watch:{
+    //watch中的处理函数的名字是data中需要监听的数据的名字
+    firstname(newVal,oldVal){
+        this.fullname=newVal+this.lastname
+    },
+    lastname(newVal,oldVal){
+        this.fullname=this.firstname+newVal
+    }
+},
+//通常情况下,能使用computed就使用computed,有缓存作用能优化性能，在异步的情况下只能用watch
+methods: {}
+})
+</script>
+</body>
+</html>

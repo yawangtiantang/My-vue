@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+</head>
+<style>
+    #app{
+        width:600px;
+        margin:10px auto;
+    }
+    .tb{
+        border-collapse: collapse;
+        width:100%;
+    }
+    .add{
+        padding:5px;
+        margin-bottom:10px;
+        border:1px solid black;
+    }
+    .tb th{
+        background-color: #0094ff;
+        color:#fff;
+    }
+    .tb th,.tb td{
+        border:1px solid black;
+        padding:5px;
+        text-align: center;
+    }
+    .tb td a{
+        text-decoration: none;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="add">
+   编号：<input type="text" v-model="newId" v-myfocus>
+   品牌名称：<input type="text" v-model="newName">
+   <button @click="add">添加</button>
+    </div>
+    <div class="add">
+        品牌名称：<input type="text">
+    </div>
+    <div>
+        <table class="tb">
+            <tr>
+                <th>编号</th>
+                <th>品牌名称</th>
+                <th>创立时间</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(item,index) in list">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime}}</td>
+                <td>
+                    <a href="#" @click="remove(index)">删除</a>
+                </td>
+            </tr>
+            <tr v-if="list.length==0">
+                <td colspan='4'>没有品牌数据了</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+// 自定义指令自动获取焦点,第一个参数是自定义指令的名称，第二个参数是对象：自定义指令的配置项
+Vue.directive('myfocus',{
+    inserted(el,binding){
+        el.focus()
+    }  //inserted第一个参数是使用自定义指令的函数，第二个参数是自定义指令的信息，这个钩子函数在自定义指令插入到页面标签上时就执行
+    })
+var vm = new Vue({
+el: '#app',
+data: {
+    newName:'',
+    newId:'',
+    
+    list:[
+        {id: 1, name: 'CC', ctime: new Date()},
+        {id: 2, name: 'LV', ctime: new Date()},
+        {id: 3, name: 'AA', ctime: new Date()},
+    ]
+},
+methods: {
+    remove(index){
+        this.list.splice(index,1)
+    },
+    add(){
+        this.list.push({id:this.newId,name:this.newName,ctime:new Date()})
+    }
+},
+// mounted(){
+//     this.$refs.inputFocus.focus()
+// }
+})
+</script>
+</body>
+</html>
