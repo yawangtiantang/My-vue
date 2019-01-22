@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+<link rel="stylesheet" href="./animate.css">
+</head>
+<!-- <style>
+    .v-enter,.v-leave-to{
+        padding-left:60px;
+    }
+    .v-enter-active,.v-leave-active{
+        transition:all 2s;
+    }
+    .v-enter-to,.v-leave{
+        padding-left:0;
+    }
+</style> -->
+<body>
+<div id="app">
+    <transition enter-active-class="animated zoomIn"
+                leave-active-class="animated hinge"
+    >
+            <div v-if="isShow">傻逼傻逼傻逼</div>
+    </transition>
+    
+    <button @click="isShow=!isShow">点击</button>
+</div>
+<script>
+var vm = new Vue({
+el: '#app',
+data: {
+    isShow:true
+},
+methods: {}
+})
+</script>
+</body>
+</html>

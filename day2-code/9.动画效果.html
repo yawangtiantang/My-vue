@@ -7,28 +7,30 @@
 <title>Document</title>
 <script src="vue2.js"></script>
 </head>
+<style>
+    .v-enter,.v-leave-to{
+        padding-left:60px;
+    }
+    .v-enter-active,.v-leave-active{
+        transition:all 2s;
+    }
+    .v-enter-to,.v-leave{
+        padding-left:0;
+    }
+</style>
 <body>
 <div id="app">
-    <input type="text" v-model="user.name">
+    <transition>
+            <div v-if="isShow">傻逼傻逼傻逼</div>
+    </transition>
+    
+    <button @click="isShow=!isShow">点击</button>
 </div>
 <script>
 var vm = new Vue({
 el: '#app',
 data: {
-    user:{
-        name:'jack'
-    }
-},
-watch:{
-    //当监听的data是复杂数据，是一个对象的时候，要用深度监听
-    
-    user:{
-        handler(newVal){//handler函数名固定
-            console.log(newVal.name)
-        },
-        deep:true//表示深度监听
-    }
-    
+    isShow:true
 },
 methods: {}
 })
