@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+<link rel="stylesheet" href="./animate.css">
+</head>
+<style>
+    #app{
+        margin:10px auto;
+        width:600px;
+        position:relative;
+    }
+    .add{
+        border:1px solid black;
+        margin-bottom:10px;
+        width:100%;
+    }
+    .add input{
+        width:100%;
+        
+    }
+    .tb{
+        width:100%;
+        border-collapse: collapse;
+    }
+    .tb th{
+        background-color: aqua;
+        color:#fff;
+    }
+    .tb th,.tb td{
+        border:1px solid black;
+        text-align: center;
+    }
+    .showBox{
+        width:200px;
+        height:100px;
+        position:absolute;
+        top:60%;
+        left:50%;
+        background-color:mediumorchid;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="add">
+        <input type="text" placeholder="请输入关键词" v-model="searchVal">
+    </div>
+    <div class='add'>
+        <table class="tb">
+            <tr>
+                <th>编号</th>
+                <th>品牌名称</th>
+                <th>创立时间</th>
+                <th>删除</th>
+            </tr>
+            <tr v-for="(item,index) in newList" :key="id">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime}}</td>
+                <td>
+                        <a href="#" @click=isShowBox(item.id,index)>删除</a>
+                </td>
+            </tr>
+           
+        </table>
+    </div>
+    <transition enter-active-class="animated fadeInRight"
+    leave-active-class="animated fadeOutRight">
+        <div class="showBox" v-if="isShow">
+            <h3>是否要删除{{tempId}}号</h3>
+            <button @click="confirmDel">确定</button>
+            <button @click="cancelDel">取消</button>
+        </div>
+    </transition>
+    
+</div>
+<script>
+var vm = new Vue({
+el: '#app',
+data: {
+    id:'',
+    tempIndex:'',
+    tempId:'',
+    isShow:false,
+   searchVal:'',
+    list:[
+        {id: 1, name: 'CC', ctime: new Date()},
+        {id: 2, name: 'LV', ctime: new Date()},
+        {id: 3, name: 'AA', ctime: new Date()},
+    ]
+},
+methods: {
+    remove(index){
+        this.list.splice(index,1)
+    },
+    isShowBox(id,index){
+        
+        this.isShow=!this.isShow
+        this.tempId=id
+        this.tempIndex=index
+    },
+    confirmDel(tempIndex){
+        this.isShow=false
+        this.remove(this.tempIndex)
+    },
+    cancelDel(){
+        this.isShow=false
+    }
+},
+computed:{
+    
+    newList(){
+        // var that=this
+        // function isContain(value){
+        //     return value.name.indexOf(that.searchVal)!== -1
+        // }
+        // var tempList = that.list.filter(isContain)
+        // return tempList
+        return this.list.filter(value => value.name.indexOf(this.searchVal)!==-1)
+    }
+}
+
+})
+</script>
+</body>
+</html>
