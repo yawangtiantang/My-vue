@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+</head>
+<body>
+<div id="app">
+    <father></father>
+</div>
+<script>
+    var eventbus = new Vue()
+    Vue.component('father',{
+        template:'<div><son></son><daughter></daughter></div>',
+        components:{
+            son:{
+                template:'<p>我妹妹告诉我她叫{{mySisterName}}</p>',
+                data(){
+                    return{
+                        mySisterName:''
+                    }
+                },
+
+                mounted(){
+                    // 在兄弟组件的mounted中用eventbus的$on方法监听它的兄弟节点传过来的事件，第一个参数是事件名，第二个参数是一个函数，默认值是传过来的数据
+                    eventbus.$on('tellMyName',data =>{
+                        console.log(data)
+                        this.mySisterName=data
+                    })
+                }
+            },
+            daughter:{
+                template:'<button @click="emitMyName">点击我告诉哥哥我叫{{myname}}</button>',
+                data(){
+                    return{
+                        myname:'小毅'
+                    }
+                },
+                methods:{
+                    emitMyName(){
+                        eventbus.$emit('tellMyName',this.myname)
+                    }
+                }
+
+
+            }
+
+        }
+
+    })
+var vm = new Vue({
+el: '#app',
+data: {},
+methods: {}
+})
+</script>
+</body>
+</html>

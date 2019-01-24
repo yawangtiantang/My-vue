@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+</head>
+<body>
+<div id="app">
+    <father></father>
+</div>
+<script>
+    Vue.component('father',{
+        template:'<div>我儿子告诉我他叫{{mysonName}}<son @tellMyname=getSonName></son></div>',
+        data(){
+            return{
+                mysonName:''
+            }
+        },
+        methods:{
+            getSonName(data){
+                this.mysonName=data
+            }
+        },
+        components:{
+            son:{
+                template:'<div><button @click="emitMyname">点击我我告诉爸爸我的名字</button></div>',
+                data(){
+                    return{
+                        myname:'小毅'
+                    }
+                },
+                methods:{
+                    emitMyname(){
+                        this.$emit('tellMyname',this.myname)
+                    }
+                }
+            }
+        }
+
+    })
+var vm = new Vue({
+el: '#app',
+data: {},
+methods: {}
+})
+</script>
+</body>
+</html>
+
+
+
+
+
+
