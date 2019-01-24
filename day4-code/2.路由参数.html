@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+<script src="vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li>
+                <router-link to="/index">首页</router-link>
+        </li>
+        <li><router-link to="/productType/11">蔬菜</router-link></li>
+        <li><router-link to="/productType/22">水果</router-link></li>
+        <li><router-link to="/productType/33">肉类</router-link></li>
+    </ul>
+    <router-view></router-view>
+</div>
+<script>
+
+   var index= Vue.component('index',{
+        template:"<p>首页</p>"
+    })
+  var productType=  Vue.component('productType',{
+      //在html中获取参数,通过$route.params.参数名
+        template:"<p>商品编号{{$route.params.id}}</p>",
+       mounted(){
+            //在js中获取参数
+            console.log(this.$route.params.id)
+        }
+    })
+    var router=new VueRouter({
+        routes:[
+            {name:'index',path:'/index',component:index},
+            {name:'productType',path:'/productType/:id',component:productType}
+        ]
+    })
+var vm = new Vue({
+el: '#app',
+router,
+data: {
+    currentCom:''
+},
+methods: {}
+})
+</script>
+</body>
+</html>
