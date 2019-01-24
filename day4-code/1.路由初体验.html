@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="vue2.js"></script>
+<script src="vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li>
+                <router-link to="/index">首页</router-link>
+        </li>
+        <li>蔬菜</li>
+        <li>水果</li>
+        <li>肉类</li>
+    </ul>
+    <router-view></router-view>
+</div>
+<script>
+
+   var index= Vue.component('index',{
+        template:"<p>首页</p>"
+    })
+  var productType=  Vue.component('productType',{
+        template:"<p>商品编号</p>"
+    })
+    var router=new VueRouter({
+        routes:[
+            {name:'index',path:'/index',component:index},
+            {name:'productType',path:'/productType',component:productType}
+        ]
+    })
+var vm = new Vue({
+el: '#app',
+router,
+data: {
+    currentCom:''
+},
+methods: {}
+})
+</script>
+</body>
+</html>
